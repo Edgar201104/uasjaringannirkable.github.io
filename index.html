@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Water Level ESP32</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .status {
+      font-size: 24px;
+      font-weight: bold;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Water Level Monitor</h2>
+  <p>Level Air:</p>
+  <div class="status" id="level">--</div>
+</div>
+
+<script>
+  setInterval(() => {
+    fetch("https://api.thingspeak.com/channels/YOUR_CHANNEL_ID/fields/1/last.json?api_key=YOUR_READ_KEY")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("level").innerHTML = data.field1 + " cm";
+      });
+  }, 3000);
+</script>
+
+</body>
+</html>
 
